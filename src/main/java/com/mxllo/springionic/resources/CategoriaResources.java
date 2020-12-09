@@ -1,4 +1,4 @@
-package resources;
+package com.mxllo.springionic.resources;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
