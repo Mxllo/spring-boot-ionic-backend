@@ -1,5 +1,6 @@
 package com.mxllo.springionic.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class Categoria implements Serializable {
     @Column(name = "name")
     private String nome;
 
+    @JsonManagedReference
     @ManyToMany(mappedBy = "categoria")
     private List<Produto> produto = new ArrayList<>();
 
