@@ -1,4 +1,4 @@
-package com.mxllo.springionic.domain;
+package com.mxllo.springionic.model;
 
 import lombok.*;
 
@@ -16,7 +16,7 @@ public class Categoria implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "nome")
+    @Column(name = "name")
     private String nome;
 
     @Override
