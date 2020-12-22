@@ -16,7 +16,7 @@ public enum TipoCliente {
             return null;
 
         for (TipoCliente cliente : TipoCliente.values()) {
-            if (cliente.equals(cliente.getCodigo()))
+            if (codigo.equals(cliente.getCodigo()))
                 return cliente;
         }
         throw new IllegalStateException("Id inválido: " + codigo);

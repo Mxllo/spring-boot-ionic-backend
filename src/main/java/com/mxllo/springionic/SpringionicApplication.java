@@ -1,6 +1,7 @@
 package com.mxllo.springionic;
 
 import com.mxllo.springionic.model.*;
+import com.mxllo.springionic.model.enums.EstadoPagamento;
 import com.mxllo.springionic.model.enums.TipoCliente;
 import com.mxllo.springionic.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 @SpringBootApplication
 public class SpringionicApplication implements CommandLineRunner {
@@ -25,13 +29,17 @@ public class SpringionicApplication implements CommandLineRunner {
     private ClienteRepository repoCliente;
     @Autowired
     private EnderecoRepository repoEndereco;
+    @Autowired
+    private PedidoRepository repoPedido;
+    @Autowired
+    private PagamentoRepository repoPagamento;
 
     public static void main(String[] args) {
         SpringApplication.run(SpringionicApplication.class, args);
     }
 
     @Override
-    public void run(String... args){
+    public void run(String... args) throws ParseException {
         Categoria cat1 = new Categoria(null, "Informática");
         Categoria cat2 = new Categoria(null, "Escritório");
         Produto p1 = new Produto(null, "Computador", 2000.00);
@@ -75,5 +83,20 @@ public class SpringionicApplication implements CommandLineRunner {
 
         repoCliente.saveAll(Arrays.asList(cli1));
         repoEndereco.saveAll(Arrays.asList(e1, e2));
+
+        SimpleDateFormat s = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        Pedido ped1 = new Pedido(null, s.parse("30/11/2020 10:32"), cli1, e1);
+        Pedido ped2 = new Pedido(null, s.parse("29/12/2020 22:35"), cli1, e2);
+
+        Pagamento pagto1 = new PagamentoComCartão(null, EstadoPagamento.QUITADO, ped1, 6);
+        ped1.setPagamento(pagto1);
+        Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2,
+                s.parse("01/01/2021 00:00"), null);
+        ped2.setPagamento(pagto2);
+
+        cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
+
+        repoPedido.saveAll(Arrays.asList(ped1, ped2));
+        repoPagamento.saveAll(Arrays.asList(pagto1, pagto2));
     }
 }
