@@ -7,6 +7,8 @@ import com.mxllo.springionic.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Optional;
 
 
@@ -41,5 +43,9 @@ public class CategoriaService {
         DataIntegrityViolationException e) {
             throw new DataIntegrityException("Não foi possivel excluir a categoria, a mesma possui produtos.");
         }
+    }
+
+    public List<Categoria> findAll() {
+        return repo.findAll();
     }
 }

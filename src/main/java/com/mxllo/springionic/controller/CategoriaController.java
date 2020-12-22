@@ -1,5 +1,6 @@
 package com.mxllo.springionic.controller;
 
+import com.mxllo.springionic.dto.CategoriaDTO;
 import com.mxllo.springionic.model.Categoria;
 import com.mxllo.springionic.services.CategoriaService;
 import com.mxllo.springionic.services.exceptions.DataIntegrityException;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value="/categorias")
@@ -43,5 +46,12 @@ public class CategoriaController {
     public ResponseEntity<Void> delete (@PathVariable Integer id)  {
         service.delete(id);
         return ResponseEntity.ok().build();
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<CategoriaDTO>> findAll()  {
+        List<Categoria> list = service.findAll();
+        List<CategoriaDTO> dto = list.stream().map(CategoriaDTO::new).collect(Collectors.toList());
+        return ResponseEntity.ok().body(dto);
     }
 }
