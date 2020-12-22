@@ -5,9 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Getter
 @Setter
@@ -26,11 +24,21 @@ public class Produto implements Serializable {
     @ManyToMany @JoinTable(name="PRODUTO_CATEGORIA", joinColumns = @JoinColumn(name ="produto_id"),
             inverseJoinColumns = @JoinColumn(name ="categoria_id"))
     private List<Categoria> categoria = new ArrayList<>();
+    @OneToMany(mappedBy = "id.produto")
+    private Set<ItemPedido> itens = new HashSet<>();
 
     public Produto(Integer id, String nome, Double preco) {
         this.id = id;
         this.nome = nome;
         this.preco = preco;
+    }
+
+    public List<Pedido> getPedidos(){
+        List<Pedido> lista = new ArrayList<>();
+        for (ItemPedido p : itens){
+            lista.add(p.getPedido());
+        }
+        return lista;
     }
 
     @Override
