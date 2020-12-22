@@ -1,19 +1,17 @@
 package com.mxllo.springionic.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @NoArgsConstructor
-@Getter
-@Setter
 public class ItemPedido implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -30,10 +28,11 @@ public class ItemPedido implements Serializable {
         this.quantidade = quantidade;
         this.preco = preco;
     }
+    @JsonIgnore
     public Pedido getPedido(){
         return id.getPedido();
     }
-
+    @JsonIgnore
     public Produto getProduto(){
         return id.getProduto();
     }
@@ -49,5 +48,29 @@ public class ItemPedido implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public Double getDesconto() {
+        return desconto;
+    }
+
+    public void setDesconto(Double desconto) {
+        this.desconto = desconto;
+    }
+
+    public Integer getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public Double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(Double preco) {
+        this.preco = preco;
     }
 }

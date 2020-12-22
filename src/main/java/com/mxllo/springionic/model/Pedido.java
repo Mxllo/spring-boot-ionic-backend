@@ -1,5 +1,7 @@
 package com.mxllo.springionic.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,13 +19,18 @@ public class Pedido implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date instante;
-    @OneToOne(cascade=CascadeType.ALL, mappedBy="pedido")
+
+    @OneToOne(cascade=CascadeType.ALL, mappedBy="pedido") @JsonManagedReference
     private Pagamento pagamento;
-    @ManyToOne @JoinColumn(name="cliente_id")
+
+    @ManyToOne @JoinColumn(name="cliente_id") @JsonManagedReference
     private Cliente cliente;
+
     @ManyToOne @JoinColumn(name="endereco_de_entrega_id")
     private Endereco enderecoDeEntrega;
+
     @OneToMany(mappedBy = "id.pedido")
     private Set<ItemPedido> itens = new HashSet<>();
 

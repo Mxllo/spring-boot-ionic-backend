@@ -1,5 +1,6 @@
 package com.mxllo.springionic.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.mxllo.springionic.model.enums.EstadoPagamento;
 import lombok.*;
 
@@ -15,7 +16,7 @@ public abstract class Pagamento implements Serializable {
     @Id
     private Integer id;
     private Integer estado;
-    @OneToOne @JoinColumn(name = "pedido_id") @MapsId
+    @OneToOne @JoinColumn(name = "pedido_id") @MapsId @JsonBackReference
     private Pedido pedido;
 
     public Pagamento(Integer id, EstadoPagamento estado, Pedido pedido) {
