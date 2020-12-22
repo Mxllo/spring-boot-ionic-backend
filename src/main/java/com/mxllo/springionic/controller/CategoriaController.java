@@ -2,7 +2,9 @@ package com.mxllo.springionic.controller;
 
 import com.mxllo.springionic.model.Categoria;
 import com.mxllo.springionic.services.CategoriaService;
+import com.mxllo.springionic.services.exceptions.DataIntegrityException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -34,7 +36,12 @@ public class CategoriaController {
     public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody Categoria obj){
         obj.setId(id);
         obj = service.update(obj);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.accepted().build();
     }
 
+    @RequestMapping(value="/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> delete (@PathVariable Integer id)  {
+        service.delete(id);
+        return ResponseEntity.ok().build();
+    }
 }

@@ -1,5 +1,7 @@
 package com.mxllo.springionic.controller.exception;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.mxllo.springionic.services.exceptions.DataIntegrityException;
 import com.mxllo.springionic.services.exceptions.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,5 +16,11 @@ public class ResourceExceptionHandler {
     public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException e,  HttpServletResponse request) {
         StandardError error = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage(), System.currentTimeMillis());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(DataIntegrityException.class)
+    public ResponseEntity<StandardError> dataIntegrityException(DataIntegrityException e,  HttpServletResponse request) {
+        StandardError error = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 }
