@@ -1,6 +1,6 @@
 package com.mxllo.springionic.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,7 +21,7 @@ public class Endereco  implements Serializable {
     private String complemento;
     private String bairro;
     private String cep;
-    @JsonBackReference
+    @JsonIgnore
     @ManyToOne @JoinColumn(name="cliente_id")
     private Cliente cliente;
     @ManyToOne @JoinColumn(name="cidade_id")

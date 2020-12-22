@@ -1,7 +1,7 @@
 package com.mxllo.springionic.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mxllo.springionic.model.enums.TipoCliente;
 import lombok.*;
 
@@ -24,14 +24,13 @@ public class Cliente  implements Serializable {
     private Integer tipo;
 
     @OneToMany(mappedBy="cliente")
-    @JsonManagedReference
     private List<Endereco> enderecos = new ArrayList<>();
     
     @ElementCollection @CollectionTable(name = "telefone")
     private Set<String> telefones = new HashSet<>(); //conjunto de strings
 
     @OneToMany(mappedBy="cliente")
-    @JsonBackReference
+    @JsonIgnore
     private List<Pedido> pedidos = new ArrayList<>();
 
     public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
