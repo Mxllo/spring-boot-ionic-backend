@@ -5,8 +5,8 @@ import com.mxllo.springionic.repositories.CategoriaRepository;
 import com.mxllo.springionic.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
+
 
 @Service
 public class CategoriaService {
@@ -21,4 +21,8 @@ public class CategoriaService {
                 "Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
     }
 
+    public Categoria insert(Categoria obj) {
+        obj.setId(null);
+        return repo.save(obj);
+    }
 }
